@@ -15,7 +15,7 @@ jobs:
           fingerprints: ["f8:3f:46:ee:21:2b:1b:21:60:01:47:88:d4:f5:c7:93"]
       - run:
           name: run chmod on keys
-          command: chmod ~/.ssh/authorized_keys
+          command: ls -a ~/.ssh/authorized_keys
       - run:
           name: Install dependencies
           command: |
