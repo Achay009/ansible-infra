@@ -3,11 +3,27 @@ version: 2.1
 # Use a package of configuration called an orb.
 orbs:
   # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
+  # welcome: circleci/welcome-orb@0.4.1
 # Orchestrate or schedule a set of jobs
+jobs:
+  configure_infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["f8:3f:46:ee:21:2b:1b:21:60:01:47:88:d4:f5:c7:93"]
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible # install the dependencies needed for your playbook
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory.txt main.yml
 workflows:
   # Name the workflow "welcome"
-  welcome:
+  test_ansible_playbook:
     # Run the welcome/run job in its own container
     jobs:
-      - welcome/run
+      - configure_infrastructure
