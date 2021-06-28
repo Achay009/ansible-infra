@@ -21,6 +21,7 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook main.yml -i inventory
+            echo yes
 workflows:
   # Name the workflow "welcome"
   test_ansible_playbook:
